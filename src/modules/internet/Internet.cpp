@@ -3,6 +3,8 @@
 #include <array>
 #include <map>
 #include <utility>
+#include <string>
+#include <cctype>
 
 #include "../../common/FormatHelper.h"
 #include "../../common/StringHelper.h"
@@ -86,6 +88,23 @@ std::string Internet::email(std::optional<std::string> firstName, std::optional<
 {
     return FormatHelper::format("{}@{}", username(std::move(firstName), std::move(lastName)),
                                 emailHost ? *emailHost : Helper::arrayElement<std::string>(emailHosts));
+}
+
+std::string Internet::anonymousUsername() {
+    int length = Number::integer<int>(6, 20);
+    std::string usernameAdjective;
+    std::string usernameNoun;
+    usernameAdjective = Word::adjective(length/2);
+    while (usernameAdjective.size() > length) {
+        usernameAdjective = Word::adjective();
+    }
+    usernameNoun = Word::noun();
+    while (usernameAdjective.size() + usernameNoun.size() > length || usernameAdjective.size() + usernameNoun.size() < 6)
+    {
+        usernameNoun = Word::noun();
+    }
+    usernameNoun[0] = toupper(usernameNoun[0]);
+    return usernameAdjective + usernameNoun;
 }
 
 std::string Internet::exampleEmail(std::optional<std::string> firstName, std::optional<std::string> lastName)
