@@ -81,6 +81,15 @@ public:
                              std::optional<std::string> lastName = std::nullopt,
                              std::optional<std::string> emailHost = std::nullopt);
 
+    /*
+    * @brief Generates a random anonymous username for a user
+    * 
+    * @param length of the random username. Defaults to 6 (min, max 20)
+    * 
+    * @returns Random username 
+    */
+    static std::string anonymousUsername();
+    
     /**
      * @brief Generates an email address using the given person's name as base with example domain.
      *
